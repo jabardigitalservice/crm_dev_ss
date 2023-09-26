@@ -2,6 +2,7 @@ version: '3'
 
 services:
   base: &base
+    container_name: cw_base
     image: chatwoot/chatwoot:latest
     env_file: .env ## Change this file for customized env variables
     volumes:
@@ -9,6 +10,7 @@ services:
 
   rails:
     <<: *base
+    container_name: cw_rails
     depends_on:
       - postgres
       - redis
@@ -23,6 +25,7 @@ services:
 
   sidekiq:
     <<: *base
+    container_name: cw_sidekiq
     depends_on:
       - postgres
       - redis
@@ -33,6 +36,7 @@ services:
     command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
 
   postgres:
+    container_name: cw_postgres
     image: postgres:12
     restart: always
     ports:
@@ -46,6 +50,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
   redis:
+    container_name: cw_redis
     image: redis:alpine
     restart: always
     command: ["sh", "-c", "redis-server --requirepass \"$REDIS_PASSWORD\""]
