@@ -3,14 +3,16 @@ version: '3'
 services:
   base: &base
     container_name: cw_base
+    # image: chatwoot/chatwoot:latest-ce
     image: chatwoot/chatwoot:latest
     env_file: .env ## Change this file for customized env variables
     volumes:
-      - /data/storage:/app/storage
+      - ./data/storage:/app/storage
 
   rails:
     <<: *base
     container_name: cw_rails
+    restart: always
     depends_on:
       - postgres
       - redis
@@ -26,6 +28,7 @@ services:
   sidekiq:
     <<: *base
     container_name: cw_sidekiq
+    restart: always
     depends_on:
       - postgres
       - redis
@@ -42,7 +45,7 @@ services:
     ports:
       - '127.0.0.1:5432:5432'
     volumes:
-      - /data/postgres:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${POSTGRES_DATABASE}
       - POSTGRES_USER=${POSTGRES_USERNAME}
@@ -56,6 +59,6 @@ services:
     command: ["sh", "-c", "redis-server --requirepass \"$REDIS_PASSWORD\""]
     env_file: .env
     volumes:
-      - /data/redis:/data
+      - ./data/redis:/data
     ports:
       - '127.0.0.1:6379:6379'
