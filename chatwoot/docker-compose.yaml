@@ -22,7 +22,7 @@ services:
       - NODE_ENV=${RAILS_ENV}
       - RAILS_ENV=${RAILS_ENV}
       - INSTALLATION_ENV=docker
-      - FRONTEND_URL=http://0.0.0.0:3000
+      - FRONTEND_URL=${FRONTEND_URL}
     entrypoint: docker/entrypoints/rails.sh
     command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
 
