@@ -5,11 +5,11 @@ import App from './App.vue'
 import router from './router'
 import { createChatWoot } from '@productdevbook/chatwoot/vue'
 
+
 const chatwoot = createChatWoot({
   init: {
-    // baseUrl: "https://9e0e-36-72-200-240.ngrok-free.app",
-    baseUrl: "http://127.0.0.1:3000",
-    websiteToken: "iTcF7Wjc4FVPP4V5uyhBEEVz",
+    baseUrl: import.meta.env.VITE_BASE_URL,
+    websiteToken: import.meta.env.VITE_TOKEN,
   },
   settings: {
     locale: "en",
@@ -18,7 +18,6 @@ const chatwoot = createChatWoot({
   },
   partytown: false,
 });
-
 
 const app = createApp(App)
 
